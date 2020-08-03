@@ -25,30 +25,26 @@
 		call mr1ay mbat 5 8 1f ":click please:"
 
 		:Maingateloop
-		set /a a=%a%+1
-		call mr1ay mbat 0 0 8e %a%
-		call :internet
 
-		call mr1ay.bat batboxmouse
-			if %y% equ 7 if %x% leq 20 goto :controlversion
-			if %y% geq 2 if %y% leq 5  if %x% geq 5  if %x% leq 30 goto :Maingate
-			if %y% geq 2 if %y% leq 5  if %x% geq 30 if %x% leq 60 goto :Stargate
-			goto :Maingateloop
+			set /a a=%a%+1
+			call mr1ay mbat 0 0 8e %a%
+			call :internet
+
+			call mr1ay.bat batboxmouse
+				if %y% equ 7 if %x% leq 20 goto :controlversion
+				if %y% geq 2 if %y% leq 5  if %x% geq 5  if %x% leq 30 goto :Maingate
+				if %y% geq 2 if %y% leq 5  if %x% geq 30 if %x% leq 60 goto :Stargate
+				goto :Maingateloop
 
 
 
 
 	:Stargate
-
-For /l %%A in (4,1,10) do call mr1ay mbat 0 %%A 88 "...................................................."
-
-		set /a a=%a%+1
-	
-		call mr1ay mbat 0 0 8e %a%
-
 		call mr1ay mbat 12 3 6e ". Maingate ."
 		call mr1ay mbat 43 3 3f ". Stargate . "
-		
+
+		For /l %%A in (4,1,10) do call mr1ay mbat 0 %%A 88 "...................................................."
+
 		call mr1ay mbat 5 6 4f USER
 
 		call mr1ay mbat 5 8 34 1.
@@ -56,14 +52,19 @@ For /l %%A in (4,1,10) do call mr1ay mbat 0 %%A 88 "............................
 		call mr1ay mbat 7 8 81 Mr1ay
 		call mr1ay mbat 7 9 8a Mathindos
 
-		call :internet
+		:Stargateloop
+
+			set /a a=%a%+1
+			call mr1ay mbat 0 0 8e %a%
+			call :internet
+
 			call mr1ay.bat batboxmouse
-			if %y%==0 goto :0
-			if %y% geq 2 if %y% leq 5  if %x% geq 5  if %x% leq 30   goto :Maingate
-			if %y% geq 2 if %y% leq 5  if %x% geq 30 if %x% leq 60   goto :Stargate
-			if %y% == 8 if %x% leq 20 goto mr1ay
-			if %y% == 9 if %x% leq 20 goto mathindos
-			goto :Stargate
+				if %y%==0 goto :0
+				if %y% geq 2 if %y% leq 5  if %x% geq 5  if %x% leq 30   goto :Maingate
+				if %y% geq 2 if %y% leq 5  if %x% geq 30 if %x% leq 60   goto :Stargate
+				if %y% == 8 if %x% leq 20 goto mr1ay
+				if %y% == 9 if %x% leq 20 goto mathindos
+				goto :Stargateloop
 
 
 
@@ -117,16 +118,16 @@ For /l %%A in (4,1,10) do call mr1ay mbat 0 %%A 88 "............................
 		call mr1ay mbat 5 10 1f "Internet controlled"
 		call mr1ay mbat 5 11 1f "Version controlling"
 		ping www.google.com -n 1 -w 1 > nul && (
-							goto :internetopen
+							goto :internetopen1
 							) || (
-							goto :internetclose 
+							goto :internetclose1
 							)
-		:internetclose
+		:internetclose1
 			batbox.exe /g 10 12 /c 0x8c /d "internet not found :("
 			batbox.exe /g 10 13 /c 0x8c /d "please open internet :("
 			goto :eof
 
-		:internetopen
+		:internetopen1
 			start /min up.bat w
 			:wait
 			batbox.exe /g 5 14  /c 0x8c /d " waiting download "
@@ -175,18 +176,18 @@ For /l %%A in (4,1,10) do call mr1ay mbat 0 %%A 88 "............................
 
 	:versiondownload
 		ping www.google.com -n 1 -w 1 > nul && (
-							goto :internetopen
+							goto :internetopen2
 							) || (
-							goto :internetclose 
+							goto :internetclose2
 							)
 
-		:internetclose
+		:internetclose2
 			batbox.exe /g 50 1 /c 0x8c /d "internet not found :("
 			batbox.exe /g 50 2 /c 0x8c /d "please open internet :("
 
 			goto :eof
 
-		:internetopen
+		:internetopen2
 			start /min up.bat ww
 			batbox.exe /g 50 1 /c 0x8a /d "internet found     :)"
 
